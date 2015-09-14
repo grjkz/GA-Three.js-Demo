@@ -17,10 +17,10 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( -45, window.innerWidth / window.innerHeight, 0.1, 0 );
 
 ////////////////////////// CONTROLS
-        // controls = new THREE.OrbitControls(camera);
-        // controls.minDistance = 10;
-        // controls.maxDistance = 200;
-        // // controls.noKeys = true;
+        controls = new THREE.OrbitControls(camera);
+        controls.minDistance = 10;
+        controls.maxDistance = 200;
+        // controls.noKeys = true;
 ////////////////////////////////////////
 
 var renderer = new THREE.WebGLRenderer();
