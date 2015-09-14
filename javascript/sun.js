@@ -17,10 +17,10 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( -45, window.innerWidth / window.innerHeight, 0.1, 0 );
 
 ////////////////////////// CONTROLS
-        controls = new THREE.OrbitControls(camera);
-        controls.minDistance = 10;
-        controls.maxDistance = 200;
-        // controls.noKeys = true;
+        // controls = new THREE.OrbitControls(camera);
+        // controls.minDistance = 10;
+        // controls.maxDistance = 200;
+        // // controls.noKeys = true;
 ////////////////////////////////////////
 
 var renderer = new THREE.WebGLRenderer();
@@ -76,13 +76,14 @@ scene.add( star );
 ///////////////////////  PLANET ORBITING
 
 
-//Add second planet - make a parents
+// CREATE PARENTS FOR PLANETS
 var marsparent = new THREE.Object3D();
 var moonparent = new THREE.Object3D();
 var earthparent = new THREE.Object3D();
+
 scene.add( marsparent );
 scene.add( moonparent );
-scene.add( earthparent);
+scene.add( earthparent );
 
 //Add second planet - creating the sphere
 var smallGeometry = new THREE.SphereGeometry(3, 22, 22)
@@ -91,9 +92,7 @@ var smallTexture = THREE.ImageUtils.loadTexture('images/mars.jpg')
 var smallMaterial = new THREE.MeshPhongMaterial({map: smallTexture})
 var mars = new THREE.Mesh(smallGeometry, smallMaterial)
 //mars.rotation.x += 45 * Math.PI / 180
-mars.position.x = 0
-mars.position.y = 0
-mars.position.z = 10
+mars.position.set( 0, 0, 10 )
 
 
 //Add third planet - creating the sphere
@@ -102,21 +101,20 @@ var threeTexture = THREE.ImageUtils.loadTexture('images/moon.jpg')
 // var threeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, wireframe:true})
 var threeMaterial = new THREE.MeshPhongMaterial({map: threeTexture})
 var moon = new THREE.Mesh(threeGeometry, threeMaterial)
-moon.position.y = 10
+moon.position.set( 0, 0, 25 )
 
 
 ///////////////////////// EARTH STUFF
 
-
 geometry = new THREE.SphereGeometry( 1, 60, 60 );
 // THE NEXT 2 LINES SET THE TEXTURE IMAGE ONTO THE OBJECT
 texture = THREE.ImageUtils.loadTexture('images/earth.jpg')
-material = new THREE.MeshBasicMaterial({map: texture})
+material = new THREE.MeshPhongMaterial({map: texture})
 
 var earth = new THREE.Mesh( geometry, material );
-earth.position.set( 10,0,0)
+earth.position.set( 0,0,20)
 
-scene.add( earth );
+// scene.add( earth );
 /////////////////////////////////////////////////////////////
 
 //pivots
@@ -126,7 +124,7 @@ var earthpivot = new THREE.Object3D();
 
 marspivot.rotation.z = 1;
 moonpivot.rotation.z = 5;
-earthpivot.rotation.z = 10
+earthpivot.rotation.z = 10;
 
 marsparent.add(marspivot)
 moonparent.add(moonpivot)
@@ -134,18 +132,19 @@ earthparent.add(earthpivot)
 
 marspivot.add( mars );
 moonpivot.add( moon );
-earthpivot.add( earth )
+earthpivot.add( earth );
 
 
 
 // LIGHTS
-scene.add(new THREE.AmbientLight(0xffffff));
-// var light = new THREE.PointLight( 0xffffff, 20, 0 );
-// scene.add( light );
+scene.add(new THREE.AmbientLight(0x444444, 0.0, 0));
+var light = new THREE.PointLight( 0xffffff, 2, 10000 );
+// light.position.set(20,20,20)
+scene.add( light );
 
 camera.position.z = 100;
 
-scene.add( new THREE.AxisHelper(20));
+// scene.add( new THREE.AxisHelper(20));
 
 function render() {
 	requestAnimationFrame( render );
@@ -154,16 +153,15 @@ function render() {
 	star.rotation.x += 0.001;
 	star.rotation.y += 0.001;
 	
-	mars.rotation.y *= 0.02;
-	mars.rotation.x += 0.02;
+	// mars.rotation.y *= 0.02;
+	// mars.rotation.x += 0.02;
 	
-	moon.rotation.x *= 0.07;
-	moon.rotation.y += 0.07;
-	
-	marsparent.rotation.z += 0;
-	marsparent.rotation.x += 0.002;
+	// moon.rotation.x *= 0.07;
+	// moon.rotation.y += 0.07;
 
-	moonparent.rotation.z += 0.002;
+	marsparent.rotation.x += 0.002;
+	earthparent.rotation.y += .03;
+	moonparent.rotation.x += 0.002;
 }
 render();
 
